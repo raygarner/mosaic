@@ -1,0 +1,135 @@
+Mosaic
+======
+CLI programs providing music functions which can be connected with pipes
+
+Build:
+$ make
+
+Install:
+$ sudo make install
+
+Uninstall:
+$ sudo make uninstall
+
+
+License
+=======
+Mosaic is published under the ISC license (see LICENSE file for details)
+
+
+Examples
+========
+$ md cnf+ - | int n2n4n5 | crd 1 | mld 6 1 | hrm | mxml > out.musicxml
+	md cnf+ -  : all modes containing C natural and F sharp
+	int n2n4n5 : all modes with natural 2, 4, and 5 degrees
+	crd 1      : tonic triad for each mode
+	mld 6 1    : 6 note melody with seed value 1
+	hrm        : haronise as 3 voice chord melody
+	mxml       : convert to musicxml format
+
+$ md cnf+ - | int n2n4n5 | cf
+	cf : show each key signature on treble clef stave
+
+$ md cnf+ - | int n2n4n5 | fb -
+	fb - : show each mode passed via STDIN on a guitar fretboard
+
+$ ks an ionian + : check whether A natural Ionian key signature can be written
+                   using sharps (without using double sharps)
+
+$ dg x32010 : show campfire style C major chord diagram
+
+$ md anbncndnenfngn - | crd 1 | cid 
+	cid	: identify the diatonic triads of the C major scale
+
+Data
+====
+The modes which can be read by our system are
+	Ionian
+	Dorian
+	Phrygian
+	Lydian
+	Mixolydian
+	Aeolian
+	Locrian
+
+Examples of our note representation
+	cn = c natural
+	c+ = c sharp
+	c- = b flat
+
+Examples of our interval representation
+	n5 = natural fifth
+	+5 = sharp fifth
+	-5 = flat fifth
+
+
+Parameters
+==========
+All programs read input from STDIN and some take additional data via command
+line arguments.
+
+md <notes list> [<all modes flag>]
+	- when all modes flag is not present, it reads a list of modes from 
+	  STDIN and only outputs ones also in that list
+	- notes list is not seperated by spaces, eg: anbncndnenfngn is correct
+	  format
+
+int <intervals list> [<all modes flag>]
+	- when all modes flag is not present, it reads a list of modes from 
+	  STDIN and applies the filter to that list otherwise it applies it
+	  to the set of all modes
+	- intervals list is not seperated by spaces, eg: n2n3n4n5n6n7 is 
+	  correct format
+
+crd <root degree> [<diatonic extensions>] [<all modes flag>]
+	- root degree is a number from 1 to 7 representing degree of mode to 
+	  treat as the root of the chord
+	- diatonic extensions are degrees relative to the root to be added
+	  to the triad
+	- when all modes flag is not present it reads a list of modes from
+	  STDIN and outputs the relevant chord for each mode, otherwise it
+	  does it for all modes
+
+mld <length> <seed>
+	- both arguments are integers
+	- seed is used to generate the movement for the melody
+	- reads a list of chords from STDIN (eg output from crd) and 
+	  generates a melody for each
+
+hrm
+	- reads a list of melodies (eg output from mld) from STDIN and adds
+	  a middle and bass line beneath each one
+
+mxml
+	- reads a list of 3 part harmoniese (eg output from hrm) from STDIN and 
+	  outputs the musicxml representation of them
+
+cf
+	- reads a list of modes from STDIN and shows the stave key signature
+	  representation for each one
+
+fb (<STDIN flag>|<start fret> <mode> [<altered>]) 
+	- when STDIN flag '-' is passed fb reads a list of modes from STDIN
+	  and displays each on on a guitar fretboard
+	- if STDIN flag is not passed then fb will display the <mode> mode of
+	  the major scale starting on <start fret> on the E string
+	- if the altered flag 'a' is passed then the intervals of the altered
+	  scale will be used instead of those of the major scale
+
+dg <string frets>
+	- reads 6 fret numbers and prints the chord diagram they form
+
+cid
+	- reads a list of notes in 3s from STDIN and discards any optional 
+	  mode data such as from the output of crd
+
+
+Dependencies
+============
+The programs and library written for this system are in ANSI 99 C so require
+a compiler and libc implementation supporting this. These should be present
+already in almost all Linux distributions. 
+
+The programs are designed to be used in conjunction with the standard Unix
+operators '|' and '>' so ideally the platform you are using should implement 
+them.

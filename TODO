@@ -1,0 +1,60 @@
+chord substitution program
+	eg b5
+
+extra argument to fb representing intervals
+
+jazz lick generator
+	eg notes from jazz minor scale half step above dominant chord root
+
+do testing with alternate 7 note scale interval set
+	eg modes of the jazz minor scale instead of major scale
+
+cid
+	make it so it can recognise triads with repeated notes eg
+	    cn en gn cn en
+
+dg
+	read multiple tab inputs at once
+	show nut for campfire chords
+	make it work for infinite amount of chords
+	make it optionally output just the note names so that it can be fed
+	    into cid
+
+fb
+	show output from crd, mld, hrm
+
+cf
+	show output from crd, mld, hrm
+
+mxml
+	make it able to read output from mld
+	make it able to read output from crd
+	write key signatures
+
+hrm:
+	check for tritone intervals when adding middle line
+
+crd
+	be able to read altered extensions eg -9, +9, -5, +5
+	be able to read input from crd
+	be able to convert degree from diatonic to major, minor or dominant
+
+program to show ted greene style chord diagrams
+
+program to invert chords
+
+program to extend chords
+
+program to detect paralell fifths, paralell octaves etc
+
+alternate style harmony generator
+	try to simplify
+	use randomness
+	idea: linear time bassline generator in style of fugue.
+		breaks melody into crotches and quavers
+		creates 'call and response' texture
+	fg (fugue generator)
+
+standalone fb usage
+write program to take unsorted musical data such as modes or chords and return it as a list sorted by 'tension' value of each item
+flag to input notes via stdin for md
